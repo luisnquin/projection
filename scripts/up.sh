@@ -16,14 +16,15 @@ main() {
 
         profile_name="${entry%@*}"
         bucket_name=$(echo "$entry" | awk -F '@' '{print $2}')
+        files_count=$(find "$raw_entry" -type f | wc -l)
 
-        printf "\033[38;2;82;127;128m%s\033[0m@%s [%s/%s] - syncing...\r" "$profile_name" "$bucket_name" "$INDEX" "$entries_count"
+        printf "\033[38;2;82;127;128m%s\033[0m@%s [%s/%s] - syncing %s files...\r" "$profile_name" "$bucket_name" "$INDEX" "$entries_count" "$files_count"
 
         aws s3 --profile "$profile_name" cp --recursive "$raw_entry" "s3://$bucket_name" --storage-class STANDARD --acl private >/dev/null
 
         INDEX="$((INDEX + 1))"
 
-        printf "\033[38;2;140;243;245m%s\033[0m@%s [%s/%s] - synced up.\n" "$profile_name" "$bucket_name" "$INDEX" "$entries_count"
+        printf "\033[38;2;140;243;245m%s\033[0m@%s [%s/%s] - %s files synced up.\n" "$profile_name" "$bucket_name" "$INDEX" "$entries_count" "$files_count"
     done
 }
 
