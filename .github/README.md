@@ -1,5 +1,5 @@
 
-# Projection
+# S3 Projection
 
 Place to **put and deliver**(and then if you're ready for that, to erase) objects to the S3. There's no need to deal with
 environment variables, you only need to have your **AWS CLI profiles** configured and the specified *S3 buckets* **must** exist.
